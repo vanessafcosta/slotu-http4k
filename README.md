@@ -13,9 +13,10 @@ You will achieve these by working through a sequence of exercises and challenges
 
 Work through each of these challenges in sequence. Each challenge contains supporting materials to help in the task.
 
-1. [Greeter]
-2. [Rock-Paper-Scissors]
-3. [Chitter]
+1. [Greeter](./challenges/01_greeter.md)
+2. [Greeter 2](./challenges/02_greeter2.md)
+3. [Rock-Paper-Scissors](./challenges/03_rock_paper_scissors.md)
+4. [Chitter](./challenges/04_chitter.md)
 
 <!-- BEGIN GENERATED SECTION DO NOT EDIT -->
 
