@@ -16,6 +16,7 @@ In this challenge, you'll build a greeter web app which prints a personalised "H
     - [How do I handle data sent with forms?](#how-do-i-handle-data-sent-with-forms)
     - [Writing tests for forms](#writing-tests)
     - [More on the Handlebars syntax](#more-on-the-handlebars-templating-syntax)
+    - [Exercises to go further](#exercises-to-go-further)
 
 ## Exercise
 
@@ -186,8 +187,6 @@ val requiredForm = Body.webForm(
 }
 ```
 
-
-
 ### More on the Handlebars templating syntax
 
 Let's assume we have the following `ViewModel` class. It contains a mix of string and boolean properties, and a list of objects.
@@ -227,7 +226,13 @@ In handlebars template files, we can use the following syntax to access these pr
 </ul>
 ```
 
+#### Exercises to go further
 
+1. Create an HTML template for the route `/secret` implemented in the previous exercises.
+
+2. Update the route built previously `/secret` so it now accepts the password from an HTML form, rather than a query parameter.
+
+    This means you'll need two routes: a `GET` route for a first page containing the form, and a `POST` route to receive the form data and display the result.
 
 [Next Challenge](03_rock_paper_scissors.md)
 
