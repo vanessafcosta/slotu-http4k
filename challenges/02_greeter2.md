@@ -50,8 +50,14 @@ Then run a "Gradle sync" when prompted.
 
 ### How do I write HTML pages?
 
+To use a template to send back an HTML response, we need:
+ * create a `ViewModel` data class
+ * create a "renderer"
+ * pass data to the template to get the final HTML result
+
 ```kotlin
 import org.http4k.template.ViewModel
+import org.http4k.template.HandlebarsTemplates
 
 // 1.
 data class PersonViewModel(
@@ -62,11 +68,16 @@ data class PersonViewModel(
 // 2.
 val templateRenderer = HandlebarsTemplates().HotReload("src/main/resources")
 
-// 3.
-val viewModel = PersonViewModel("John", "Doe")
+val app: HttpHandler = routes(
+    "/" bind POST to { request: Request ->
 
-Response(Status.OK)
-    .body(templateRenderer(viewModel))
+        // 3.
+        val viewModel = PersonViewModel("John", "Doe")
+
+        Response(Status.OK)
+            .body(templateRenderer(viewModel))
+    }
+)
 ```
 
 ```hbs
@@ -103,7 +114,9 @@ We can use lenses again to handle parameters sent with POST forms:
 
 ```kotlin
 import org.http4k.lens.FormField
-import org.http4k.lens.Body
+// Below is a shortcut to include everything
+// under org.http4k.lens.
+import org.http4k.lens.*
 
 // 1. Create lenses for individual fields
 val requiredFirstNameField = FormField.required("first_name")
@@ -118,11 +131,18 @@ val requiredForm = Body.webForm(
     requiredLastNameField
 ).toLens()
 
-// 3. Unwrap the form from the request, then individual values
 
-val form = requiredForm(request)
-val firstName = requiredFirstNameField(form)
-val lastName = requiredLastNameField(form)
+val app: HttpHandler = routes(
+    "/signup" bind POST to {request: Request ->
+
+        // 3. Unwrap the form from the request, then individual values
+        val form = requiredForm(request)
+        val firstName = requiredFirstNameField(form)
+        val lastName = requiredLastNameField(form)
+
+        // ...
+    }
+)
 ```
 
 [A more complex example can be found in the official documentation.](https://www.http4k.org/guide/howto/use_html_forms/#lens_typesafe_validating_api)
