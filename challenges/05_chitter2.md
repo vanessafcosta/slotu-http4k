@@ -16,10 +16,17 @@ In this challenge, you'll build the Chitter challenge with Kotlin and http4k (an
 _This is the exercise. You may or may not be able to do this yet. Use the
 supporting materials below this exercise to help you._
 
-[Using the starter project](../resources/starter_project/), build a web app which is a game of Rock-Paper-Scissors.
+Improve the Chitter web app challenge built in the previous section by integrating a database to store its data.
 
 ## Supporting materials
 
+### The ktorm library
+
+https://www.ktorm.org/en/quick-start.html
+
+```kotlin
+
+```
 
 <!-- BEGIN GENERATED SECTION DO NOT EDIT -->
 

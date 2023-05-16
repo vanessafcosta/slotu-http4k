@@ -18,11 +18,13 @@ supporting materials below this exercise to help you._
 
 [Using the starter project](../resources/starter_project/), build the Chitter web app challenge.
 
-### Features:
+First, build a simpler version which doesn't use a database to store the peeps.
+
+### Features
+
+These features are listed in increasing level of complexity, so start with the one at the top. Make sure that you test-drive each feature.
 
 ```
-STRAIGHT UP
-
 As a Maker
 So that I can let people know what I am doing  
 I want to post a message (peep) to chitter
@@ -39,8 +41,6 @@ As a Maker
 So that I can post messages on Chitter as me
 I want to sign up for Chitter
 
-HARDER
-
 As a Maker
 So that only I can post messages on Chitter as me
 I want to log in to Chitter
@@ -48,21 +48,16 @@ I want to log in to Chitter
 As a Maker
 So that I can avoid others posting messages on Chitter as me
 I want to log out of Chitter
-
-ADVANCED
-
-As a Maker
-So that I can stay constantly tapped in to the shouty box of Chitter
-I want to receive an email if I am tagged in a Peep
 ```
 
 ## Supporting materials
 
-### Routing
+### Where to store the data?
 
-### Handlebars templates
+You don't need to use a database in this exercise ([this will come next](./05_chitter2.md)). You can use an in-memory `ArrayList` to store the peeps and user accounts (this means your data will be lost when the program stops running).
 
-### Forms
+
+
 
 [Next Challenge](05_chitter2.md)
 

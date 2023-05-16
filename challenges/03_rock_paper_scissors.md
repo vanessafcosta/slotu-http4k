@@ -22,7 +22,9 @@ On the home page, the user should be able to select one of the three moves, then
 
 ## Supporting materials
 
-### Generating a random move
+### How to generate a random move?
+
+[You can use the `Random.Default` class](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.random/-random/-default/) from Kotlin to help you generate the random move from the game.
 
 
 
