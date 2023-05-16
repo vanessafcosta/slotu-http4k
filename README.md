@@ -13,10 +13,14 @@ You will achieve these by working through a sequence of exercises and challenges
 
 Work through each of these challenges in sequence. Each challenge contains supporting materials to help in the task.
 
+These challenges can be completed individually, or in pairs or small groups.
+
 1. [Greeter](./challenges/01_greeter.md)
 2. [Greeter 2](./challenges/02_greeter2.md)
 3. [Rock-Paper-Scissors](./challenges/03_rock_paper_scissors.md)
 4. [Chitter](./challenges/04_chitter.md)
+5. [Chitter with database](./challenges/05_chitter2.md)
+6. [MakersBnB](./challenges/06_makersbnb.md)
 
 <!-- BEGIN GENERATED SECTION DO NOT EDIT -->
 

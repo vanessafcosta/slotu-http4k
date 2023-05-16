@@ -28,6 +28,8 @@ https://www.ktorm.org/en/quick-start.html
 
 ```
 
+[Next Challenge](06_makersbnb.md)
+
 <!-- BEGIN GENERATED SECTION DO NOT EDIT -->
 
 ---
