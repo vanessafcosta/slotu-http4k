@@ -10,6 +10,7 @@ In this challenge, you'll build a greeter web app which prints a personalised "H
 
 - [Exercise](#exercise)
 - [Supporting Materials](#supporting-materials)
+    - [Video](#video)
     - [Installing Handlebars](#installing-handlebars-in-the-project)
     - [How do I write HTML pages?](#how-do-i-write-html-pages)
     - [More on http4k lenses](#more-on-http4k-lenses)
@@ -30,6 +31,10 @@ The user should get a form on the home page where they can input their name. Onc
 ## Supporting materials
 
 The following content can be read top to bottom. You might need to research a few things by yourself in the provided documentation links.
+
+### Video
+
+[A video walkthrough of the following sections and exercises is available here](https://www.youtube.com/watch?v=BF0mrNVw0Gw)
 
 ### Installing Handlebars in the project
 

@@ -10,6 +10,11 @@ In this challenge, you'll build a greeter web app which prints a personalised "H
 
 - [Exercise](#exercise)
 - [Supporting Materials](#supporting-materials)
+    - [Video](#video)
+    - [Where do I start?](#where-do-i-start)
+    - [What does the code do?](#what-does-the-code-do)
+    - [Writing tests](#writing-tests)
+    - [Handling request parameters](#handling-request-parameters)
 
 ## Exercise
 
