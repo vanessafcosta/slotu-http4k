@@ -18,7 +18,9 @@ supporting materials below this exercise to help you._
 
 [Using the starter project](../resources/starter_project/), build a web app which prints a personalised greeting message to its user.
 
-If the user browses the URL http://localhost/hello?name=Leo, it should print "Hello Leo". If they browse the URL http://localhost/hello?name=Jay, it should print "Hello Jay", etc. 
+If the user heads to the URL http://localhost/hello?name=Leo, the server should send back "Hello Leo".
+
+If they head to the URL http://localhost/hello?name=Jay, they should get "Hello Jay", etc. 
 
 ## Supporting materials
 
@@ -27,6 +29,14 @@ The following content should be read in sequence. You might need to research a f
 ### Video
 
 [A video walkthrough of the following sections and exercises is available here](https://www.youtube.com/watch?v=TXeFAqHJ7Hw)
+
+### Using `curl`
+
+Some of the examples below use the command-line utility `curl` to send HTTP requests. If you don't have it already, you can install it using homebrew (or use a different HTTP tool such as Postman).
+
+```shell
+brew install curl
+```
 
 ### Where do I start? 
 
@@ -131,6 +141,8 @@ fun main() {
 
 2. Within the route lambda, we can access the actual value of the parameter present in the request by using the lens like a function, passing the request in argument. Note that because we used `optional`, the parameter might be present or not — which is why we get a `String?` for the value.
 
+The following `curl` commands show the resulting behaviour of the server:
+
 ```
 $ curl 'http://localhost:9000/?city=London'
 Hello, you've chosen London
@@ -141,7 +153,9 @@ Hello, you've chosen Paris
 
 #### Exercises to go further
 
-Test-drive a new route `GET /secret` which returns either a text response "The cookies are in the desk drawer", either "Wrong password!", depending on the query parameter `password`:
+Test-drive a new route `GET /secret` which returns either a text response "The cookies are in the desk drawer", either "Wrong password!", depending on the query parameter `password`.
+
+The following `curl` commands show the expected behaviour of the server:
 
 ```
 $ curl 'http://localhost:9000/secret?password=something'

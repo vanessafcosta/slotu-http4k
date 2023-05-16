@@ -10,6 +10,12 @@ In this challenge, you'll build a greeter web app which prints a personalised "H
 
 - [Exercise](#exercise)
 - [Supporting Materials](#supporting-materials)
+    - [Installing Handlebars](#installing-handlebars-in-the-project)
+    - [How do I write HTML pages?](#how-do-i-write-html-pages)
+    - [More on http4k lenses](#more-on-http4k-lenses)
+    - [How do I handle data sent with forms?](#how-do-i-handle-data-sent-with-forms)
+    - [Writing tests for forms](#writing-tests)
+    - [More on the Handlebars syntax](#more-on-the-handlebars-templating-syntax)
 
 ## Exercise
 
@@ -18,13 +24,13 @@ supporting materials below this exercise to help you._
 
 [Building on the previous exercise](./01_greeter.md), we want to make improvements to make the greeter app more user-friendly.
 
-The user should get a form on the home page where they can input their name. Once they submit the form, they should get a new page with the greeting message displayed.
+The user should get a form on the home page where they can input their name. Once they submit the form, they should get a new page with the greeting message displayed. Test-drive this new feature.
 
 ## Supporting materials
 
 The following content can be read top to bottom. You might need to research a few things by yourself in the provided documentation links.
 
-### How do I write HTML pages?
+### Installing Handlebars in the project
 
 Using the Handlebars templating engine, we can return HTML web pages from the routes.
 
@@ -41,6 +47,8 @@ dependencies {
 ```
 
 Then run a "Gradle sync" when prompted.
+
+### How do I write HTML pages?
 
 ```kotlin
 import org.http4k.template.ViewModel
@@ -63,6 +71,7 @@ Response(Status.OK)
 
 ```hbs
 <!-- file: src/main/resources/PersonViewModel.hbs -->
+
 <h1>Hello {{firstName}} {{lastName}}</h1>
 ```
 
@@ -70,33 +79,135 @@ Response(Status.OK)
 2. We create a "renderer" using `HandlebarsTemplates().HotReload("src/main/resources")`, giving the path to the Handlebars templates in the project.
 3. We create an instance from the `ViewModel` class and give it to the `templateRenderer`. The template will then be transformed to the final HTML body, using the actual values provided in the `ViewModel`. This returns a string (the HTML body) we can send back in the response.
 
+Note that the `.hbs` file needs to have the exact same name than the `ViewModel` class name.
+
+[The documentation can be found here.](https://www.http4k.org/guide/howto/use_a_templating_engine/)
+
+### More on http4k lenses
+
+As seen in the previous section, lenses allow us to access values in the request, such as query parameters in the URL.
+
+We can use them to access other things too, such as values sent by form (in `POST` requests), HTTP headers, etc.
+
+How to know when using a lens can be useful? Well:
+
+ * If you need to access (or validate) a query parameter from the URL, such as `/greet?name=Leo`, you can use a lens for this.
+ * If you need to access (or validate) a value sent in a form, you can use a lens for this.
+ * If you need to access a HTTP header value (or validate) sent in the request, you can use a lens for this.
+
+[More examples can be found in the documentation](https://www.http4k.org/guide/concepts/lens/)
+
 ### How do I handle data sent with forms?
 
 We can use lenses again to handle parameters sent with POST forms:
 
 ```kotlin
 import org.http4k.lens.FormField
+import org.http4k.lens.Body
 
-// 1.
+// 1. Create lenses for individual fields
 val requiredFirstNameField = FormField.required("first_name")
 val requiredLastNameField = FormField.required("last_name")
 
-// 2.
+// 2. Create a lens for the form
+//   (which contains the fields above, and 
+//   some validation strategy)
+val requiredForm = Body.webForm(
+    Validator.Strict,
+    requiredFirstNameField,
+    requiredLastNameField
+).toLens()
 
-val firstName = requiredFirstNameField(request)
-val lastName = requiredLastNameField(request)
+// 3. Unwrap the form from the request, then individual values
+
+val form = requiredForm(request)
+val firstName = requiredFirstNameField(form)
+val lastName = requiredLastNameField(form)
 ```
+
+[A more complex example can be found in the official documentation.](https://www.http4k.org/guide/howto/use_html_forms/#lens_typesafe_validating_api)
 
 ### Writing tests
 
-@TODO
+We can re-use lenses in our tests as well, to build test requests sent to the app. Below is an example of using the previous declared lens `requiredForm` to build a test request.
+
+```kotlin
+// In the "Main" program file:
+
+import org.http4k.lens.*
+
+val requiredFirstNameField = FormField.required("first_name")
+val requiredLastNameField = FormField.required("last_name")
+val requiredForm = Body.webForm(
+    Validator.Strict,
+    requiredFirstNameField,
+    requiredLastNameField
+).toLens()
+```
+
+```kotlin
+// In a test file:
+
+@Test fun testSignup() {
+    // 1. Build the form
+    val form = WebForm(mapOf(
+        "firstName" to listOf("John"),
+        "lastName" to listOf("Doe"),
+    ))
+
+    // 2. Send the request
+    val response = app(
+        Request(Method.POST, "http://localhost:9000/users").with(
+            requiredForm of form
+        )
+    )
+
+    // ...
+}
+```
+
 
 
 ### More on the Handlebars templating syntax
 
-```hbs
+Let's assume we have the following `ViewModel` class. It contains a mix of string and boolean properties, and a list of objects.
 
+```kotlin
+data class Hobbie(
+    val name: String
+)
+
+data class PersonViewModel(
+    val firstName: String,
+    val lastName: String,
+    val hobbies: List<Hobbie>,
+    val isAuthorized: Boolean
+) : ViewModel
 ```
+
+In handlebars template files, we can use the following syntax to access these properties, have conditionals on them, or loop through them:
+
+```hbs
+<h1>{{firstName}} {{lastName}}</h1>
+```
+
+```hbs
+<p>
+    {{#if isAuthorized}}
+        You are authorized
+    {{/if}}
+</p>
+```
+
+```hbs
+<ul>
+    {{#each people.hobbies}}
+        <li>{{name}}</li>
+    {{/each}}
+</ul>
+```
+
+
 
 [Next Challenge](03_rock_paper_scissors.md)
 
