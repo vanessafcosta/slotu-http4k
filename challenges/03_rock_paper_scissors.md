@@ -10,6 +10,8 @@ In this challenge, you'll build a game of Rock-Paper-Scissors.
 
 - [Exercise](#exercise)
 - [Supporting Materials](#supporting-materials)
+    - [I'm not sure where to start](#im-not-sure-where-to-start)
+    - [How to generate a random move?](#how-to-generate-a-random-move)
 
 ## Exercise
 
@@ -21,6 +23,50 @@ supporting materials below this exercise to help you._
 On the home page, the user should be able to select one of the three moves, then submit. The next page should indicate the result (won or lost) to the user.
 
 ## Supporting materials
+
+### I'm not sure where to start
+
+Start by test-driving a first route which returns a list of possible choices to the user. No need for HTML for now, just return a plain text response (for example, `"Rock - Paper - Scissors"`).
+
+Once this is done, do the work of [moving the response body to a Handlebars template](./02_greeter2.md#how-do-i-write-html-pages). This will become an interactive HTML page where the user can select their move using buttons (or links). Whether you're using query parameters or a form, [make sure you use the http4k lens mechanism.](./01_greeter.md#handling-request-parameters)
+
+The rest of the challenge will be the result page, where the player move is compared to a randomly generated move.
+
+### Custom Handlebars helpers
+
+There are times where we need to call some Kotlin code in our templates. For example, let's say we want to transform to uppercase a value printed in a template.
+
+```hbs
+<h1>{{ name }}</h1>
+```
+
+It would be good if we could just write...
+
+```hbs
+<h1>{{ name.uppercase() }}</h1>
+```
+
+This doesn't work. But we can register a custom Handlebars helper to get the same result:
+
+```kotlin
+import com.github.jknack.handlebars.Handlebars
+
+// ...
+
+fun configureHandlebars (config: Handlebars): Handlebars {
+    config.registerHelper<String>("uppercase") { string, _options ->
+        string.uppercase()
+    }
+
+    return config
+}
+
+val renderer = HandlebarsTemplates(::configureHandlebars).HotReload("src/main/resources")
+```
+
+```hbs
+<h1>{{ uppercase name }}</h1>
+```
 
 ### How to generate a random move?
 

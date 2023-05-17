@@ -84,6 +84,18 @@ Let's break it down:
 
 ### Writing tests
 
+Testing web applications involves sending requests to it, and asserting the response it sends back is the correct one. 
+
+Thanks to the way http4k works, we can "send" requests to the `app` without having to launch a real server. We can simply build a `Request` object and pass it directly to the `app`, as if our app were a function:
+
+```kotlin
+val response = app(
+    Request(GET, "http://localhost:9000/")
+)
+```
+
+This is actually one of the core principles of the http4k library — [a server is a function taking a request as input, and returning a response](https://www.http4k.org/documentation/).
+
 ```kotlin
 // file: src/test/kotlin/com.example/AppTest.kt
 
@@ -98,8 +110,10 @@ class AppTest {
 
     @Test
     fun testReturnsHello() {
-        val client = OkHttp()
 
+        // `app` is declared in Main.kt outside
+        // of the `main` function, so it can be accessed
+        // as a global value (from our tests too).
         val response = app(
             Request(GET, "http://localhost:9000/")
         )
