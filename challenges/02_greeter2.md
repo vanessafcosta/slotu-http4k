@@ -194,39 +194,41 @@ val requiredForm = Body.webForm(
 
 ### More on the Handlebars templating syntax
 
-Let's assume we have the following `ViewModel` class. It contains a mix of string and boolean properties, and a list of objects.
+Let's assume we have the following `ViewModel` class. It contains a mix of string and boolean properties, and a list of strings.
 
 ```kotlin
-data class Hobbie(
-    val name: String
-)
-
 data class PersonViewModel(
     val firstName: String,
     val lastName: String,
-    val hobbies: List<Hobbie>,
+    val hobbies: List<String>,
     val isAuthorized: Boolean
 ) : ViewModel
 ```
 
-In handlebars template files, we can use the following syntax to access these properties, have conditionals on them, or loop through them:
+In handlebars template files, we can use the following syntax to access these properties, have conditionals on them, or loop through them.
+
+Display properties in the HTML:
 
 ```hbs
 <h1>{{firstName}} {{lastName}}</h1>
 ```
 
+Conditionally write a block of HTML if a property is true:
 ```hbs
 <p>
     {{#if isAuthorized}}
         You are authorized
+    {{else}}
+        Access denied!
     {{/if}}
 </p>
 ```
 
+Iterating through a list (`this` refers to the current value in the list being iterated on):
 ```hbs
 <ul>
     {{#each people.hobbies}}
-        <li>{{name}}</li>
+        <li>{{this}}</li>
     {{/each}}
 </ul>
 ```

@@ -22,11 +22,24 @@ Improve the Chitter web app challenge built in the previous section by integrati
 
 ### The ktorm library
 
+We can use this library to use a database in our project.
+
+The official documentation can be found here:
 https://www.ktorm.org/en/quick-start.html
 
-```kotlin
+To install it, in your project, add this line to the `build.gradle` file, then sync your project with Gradle changes.
+
+```gradle
+// build.gradle
+
+dependencies {
+    // ...
+    // add this line
+    implementation "org.ktorm:ktorm-core:3.6.0"
+}
 
 ```
+
 
 [Next Challenge](06_makersbnb.md)
 

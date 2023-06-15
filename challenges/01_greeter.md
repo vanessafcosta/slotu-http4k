@@ -23,9 +23,9 @@ supporting materials below this exercise to help you._
 
 [Using the starter project](../resources/starter_project/), build a web app which prints a personalised greeting message to its user.
 
-If the user heads to the URL http://localhost/hello?name=Leo, the server should send back "Hello Leo".
+If the user heads to the URL http://localhost/greet?name=Leo, the server should send back "Hello Leo".
 
-If they head to the URL http://localhost/hello?name=Jay, they should get "Hello Jay", etc. 
+If they head to the URL http://localhost/greet?name=Jay, they should get "Hello Jay", etc. 
 
 ## Supporting materials
 
@@ -45,14 +45,16 @@ brew install curl
 
 ### Where do I start? 
 
-[Use the starter project](../resources/starter_project/) provided with these materials. You should be able to run the `main` function to start a web server at http://localhost:9000
+[Use the starter project](../resources/starter_project/) provided with these materials.
+
+You should be able to run the `main` function (in the file `Main.kt`) to start a web server, and access it at the URL http://localhost:9000
 
 ### What does the code do?
 
 The code in the starter project does a few things:
 
 ```kotlin
-// ...
+// file: Main.kt
 
 // 1
 val app: HttpHandler = routes(
@@ -95,6 +97,8 @@ val response = app(
 ```
 
 This is actually one of the core principles of the http4k library — [a server is a function taking a request as input, and returning a response](https://www.http4k.org/documentation/).
+
+(The type `HttpHandler` is actually an alias for the function type `(Request) -> Response`)
 
 ```kotlin
 // file: src/test/kotlin/com.example/AppTest.kt
