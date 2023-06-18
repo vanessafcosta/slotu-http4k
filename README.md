@@ -9,6 +9,17 @@ In this module you will learn to:
 
 You will achieve these by working through a sequence of exercises and challenges.
 
+## What is http4k?
+
+Http4k is a Kotlin library we can use to build web applications using Kotlin. Similar to Flask (Python), Sinatra (Ruby), or Express (JavaScript), the main job of a web application written with http4k is to handle HTTP requests sent from a client, do something with it, and return an HTTP response to the client.
+
+Some concepts and mechanisms to handle requests and build responses, which you might have previously used, are also present in http4k, though perhaps in a slightly different form:
+ * [Lenses](https://www.http4k.org/guide/concepts/lens/) are used to extract request parameters (query and body parameters), request headers, and other things.
+ * [View model and templating engines](https://www.http4k.org/guide/howto/use_a_templating_engine/) can be used to build templates generating HTML responses.
+ * [Routing](https://www.http4k.org/guide/howto/simple_routing/) is used to map HTTP requests' path and method to a function.
+
+Http4k is a quite young library, and online documentation can be a bit sparse. Some of the supporting materials in the challenges below will help to uncover some concepts. Don't hesitate to use your coach for help, support or question whenever something feels too challenging.
+
 ## Sequence
 
 Work through each of these challenges in sequence. Each challenge contains supporting materials to help in the task.
