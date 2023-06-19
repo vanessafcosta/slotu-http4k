@@ -14,6 +14,6 @@ class AppTest {
             Request(GET, "http://localhost:9000/")
         )
 
-        assert(response.bodyString() == "Hello Kotlin")
+        assert(response.bodyString() == "Hello")
     }
 }
