@@ -54,9 +54,73 @@ I want to log out of Chitter
 
 ### Where to store the data?
 
-You don't need to use a database in this exercise ([this will come next](./05_chitter2.md)). You can use an in-memory `ArrayList` to store the peeps and user accounts (this means your data will be lost when the program stops running).
+You don't need to use a database in this exercise ([this will come next](./05_chitter2.md)). You can use an in-memory `MutableList` to store the peeps and user accounts (this means your data will be lost when the program stops running).
 
+### Authenticate users in session
 
+Http4k has no built-in mechanism to store values in session. We need to implement a mechanism to "remember" users who logged in session, using cookies. This is definitely a bit more challenging so it's OK if you don't go that far.
+
+It happens with the following steps:
+1. A user signs in with the correct credentials and is authenticated. The server generates a unique session ID, remembers it, and sends it back to the client as a cookie in the response (a cookie is a HTTP header set in the response).
+2. Every future request sent by the client will now contain that cookie (as a HTTP request header). Our server code will be able to read the cookie, and verify if a session ID is stored inside it.
+3. The server tries to match the session ID with a user ID, to know which user is sending the request.
+
+Here's a detailed breakdown on how to do this:
+
+1. Implement a session "registry". This can be a `Map` associating a session ID to a specific user ID. This should be declared globally, probably in your main file.
+
+```kotlin
+// Main.kt
+
+// sessionRegistry is a map containing pairs of 
+// session IDs (String) and user IDs (Int)
+val sessionRegistry = mutableMapOf<String, Int>
+```
+
+2. When your user has successfully logged in, create a session ID and save it in the `sessionRegistry`. It also needs to be sent back in the response as a cookie, so the client (usually a web browser) will remember it.
+
+```kotlin
+import java.util.*
+import org.http4k.core.cookie.cookie
+import org.http4k.core.cookie.Cookie
+
+routes(
+    "/login" bind POST to { request: Request -> 
+        // Check credentials are valid
+        // and authenticate user.
+
+        val sessionId = UUID.randomUUID().toString()
+
+        sessionRegistry.put(sessionId, user.id)
+
+        return response.cookie(Cookie("session_id", sessionId))
+    },
+    // ...
+)
+```
+
+3. The browser will now send the session ID in a cookie HTTP header for every subsequent request. We can try to retrieve the cookie and the user ID to check the user has previously logged in.
+
+```kotlin
+import org.http4k.core.cookie.cookie
+
+routes(
+    "/" bind GET to { request: Request -> 
+        // Retrieve the cookie from the request
+        // and the sessionID stored inside it.
+        val cookie = request.cookie("session_id")
+        val sessionId = cookie?.value
+
+        // Verify the sessionID is present.
+        if (sessionId != null) {
+            val userId = sessionRegistry.get(sessionId)
+            
+            // Do something with user ID.
+        }
+    },
+    // ...
+)
+```
 
 
 [Next Challenge](05_chitter2.md)
