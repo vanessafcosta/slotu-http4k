@@ -93,7 +93,7 @@ routes(
 
         sessionRegistry.put(sessionId, user.id)
 
-        return response.cookie(Cookie("session_id", sessionId))
+        return Response(OK).cookie(Cookie("session_id", sessionId))
     },
     // ...
 )

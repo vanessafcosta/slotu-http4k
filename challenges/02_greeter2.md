@@ -75,7 +75,7 @@ data class PersonViewModel(
 val templateRenderer = HandlebarsTemplates().HotReload("src/main/resources")
 
 val app: HttpHandler = routes(
-    "/" bind POST to { request: Request ->
+    "/" bind GET to { request: Request ->
 
         // 3.
         val viewModel = PersonViewModel("John", "Doe")
